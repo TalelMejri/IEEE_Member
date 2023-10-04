@@ -12,8 +12,8 @@ class InfoDeveloper extends StatelessWidget {
     return Scaffold(
        drawer: Drawer(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(height: 100,),
                 Text("Created By"),
                 SizedBox(height: 10,),
                ClipRRect(
@@ -21,7 +21,8 @@ class InfoDeveloper extends StatelessWidget {
                   child: Image.asset("images/profil.jpg", width: 120),
                 ),
                 const DrawerHeader(child: Text("Talel Mejri")),
-                Text("Bahra")
+                const SizedBox(height: 260,),
+                const Text("Bahra | Bizo",style:  TextStyle(color: Colors.blue),)
               ],
             ),
         ),

@@ -12,7 +12,7 @@ class ListChapter extends StatefulWidget {
   State<ListChapter> createState() => _ListChapter();
 }
 class _ListChapter extends State<ListChapter> {
-  
+
 final storage = new FlutterSecureStorage();
 
 int countIEE=0;
@@ -24,6 +24,7 @@ void getFromLocalStoreg() async {
   if (usersJson != null) {
     final userdecode = jsonDecode(usersJson);
     List<Member> data = userdecode.map<Member>((user) => Member.fromJson(user)).toList();
+    print(data);
     setState(() {
         countIEE=data.length;
         payerIEE=data.where((element) => element.ispayer==true).length;
@@ -45,6 +46,15 @@ void getFromLocalStoreg() async {
     cahpters(Nom: "RAS", ImaggPath: "images/ras.PNG"),
     cahpters(Nom: "IAS", ImaggPath: "images/ias.PNG"),
   ];
+
+  Future<void> NavigationScreen(data) async{
+       String ? resultat=await Navigator.push(context,MaterialPageRoute(builder: (context)=>PagesForMember(NameChapter:data)));();
+        if(resultat=="test"){
+            getFromLocalStoreg();
+        }else{
+            getFromLocalStoreg();
+        }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +78,7 @@ void getFromLocalStoreg() async {
             final data = groupChapters[index];
               return GestureDetector(
                 onTap: () {
-                    Navigator.push(context,MaterialPageRoute(builder: (context)=>PagesForMember(NameChapter: data.Nom.toString())));
+                    NavigationScreen(data.Nom.toString());
                 },
                 child: Card(
               child: Column(

@@ -61,7 +61,7 @@ void deleteUser(int id) async {
         )
     );
     setState(() {}); 
-    Navigator.of(context).pop();
+    Navigator.of(context).pop("test");
     getFromLocalStoreg("");
   }
 }

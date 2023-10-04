@@ -52,53 +52,16 @@ class InfoDeveloper extends StatelessWidget {
                                 children: [
                                   Icon(index==0 ? Icons.group : index==1 ? Icons.attach_money : Icons.money_off ,size: 30,color: Colors.blue,),
                                   const SizedBox(height: 20,),
-                                 Text(index==0 ? Memebrs.toString() : index==1 ? payerNumber.toString() :NotpayerNumber.toString() ,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),) 
+                                 Text(index==0 ? Memebrs.toString() : index==1 ? payerNumber.toString() :NotpayerNumber.toString() ,style:const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),) 
                                 ],
                                ),
                             );
                           }
                      )),
-                     const Text("IEEE APP  2023"),
+                     const Text("IEEE APP 2023"),
               ],
              ),
              )
        );
    }
 }
-/*
- Container(
-               margin: const EdgeInsets.only(top: 20),
-                child:Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const CircleAvatar(
-                        maxRadius: 80,
-                        backgroundImage: AssetImage("images/sb.JPG"),
-                       ),
-                       const SizedBox(height: 20),
-                       const Text("IEEE SB ",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color:Colors.blue)),
-                       const Text("ISET BIZERTE ",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color:Colors.blue)),
-                       const SizedBox(height: 70),
-                       const Padding(padding: EdgeInsets.all(25),child: 
-                            Text("An app to facilitate adding members to a chapter, managing payments, and tracking the attendance of each chapter member at every workshop.",
-                            style: TextStyle(color: Colors.black,fontSize: 18,),)
-                       ,),
-                       const Card(
-                        child: 
-                           Padding(padding: EdgeInsets.all(25),
-                           child:Row(children: [
-                               CircleAvatar(
-                                  maxRadius: 50,
-                                  backgroundImage: AssetImage("images/profil.jpg"),
-                               ),
-                         ]),)
-                       ),
-                       Container(
-                        margin: const EdgeInsets.only(top: 50),
-                        child:  const Text("IEEE APP 2023",style:TextStyle(color: Colors.black,fontSize: 15),),
-                       )
-                    ],
-                  ),
-                ),
-               )*/

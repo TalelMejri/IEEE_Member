@@ -21,6 +21,8 @@ class _PagesForMember extends State<PagesForMember> {
 
   final storage = new FlutterSecureStorage();
 
+  String search="";
+
   @override
   void initState() {
         super.initState();
@@ -65,6 +67,18 @@ void getFromLocalStoreg(String name) async {
   }
 }
 
+void ChangeSatet(val,int id){
+  setState(() {
+       for(int i=0;i<Members.length;i++){
+      if(Members[i].id==id){
+         Members[i].present=val;
+      }
+    }
+  });
+  SetLocalStorge(Members);
+  getFromLocalStoreg("");
+}
+
 
 
   /*List<Member> getMember(){
@@ -77,8 +91,10 @@ void getFromLocalStoreg(String name) async {
  
   @override
 Widget build(BuildContext context) {
-  List<Member> data=Members.where((element) => element.chaptername == widget.NameChapter).toList();
-            return Scaffold(
+  List<Member> data=search.isEmpty ? Members.where((element) => element.chaptername == widget.NameChapter).toList() :
+    Members.where((element) => element.chaptername == widget.NameChapter && element.nom.toLowerCase().contains(search.toLowerCase())).toList()
+  ;
+  return Scaffold(
     appBar: AppBar(
       title: Text(
         "${widget.NameChapter}  (${data.length})",
@@ -91,7 +107,9 @@ Widget build(BuildContext context) {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
             onChanged: (val) {
-              getFromLocalStoreg(val);
+              setState(() {
+                search=val;
+              });
             },
             decoration: InputDecoration(
               hintText: "Search",
@@ -114,15 +132,13 @@ Widget build(BuildContext context) {
             child: ListView.builder(
               itemCount: data.length,
               itemBuilder: (context, index) {
-                final memeber = data[index];
+                Member memeber = data[index];
                 return Card(
                   child: ListTile(
                     leading: Checkbox(
                       value: memeber.present,
                       onChanged: (val) {
-                        setState(() {
-                          Members[index].present = val!;
-                        });
+                        ChangeSatet(val,memeber.id);
                       },
                     ),
                     title: Text(memeber.nom + " " + memeber.lastname),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:member_ieee/AddMember.dart';
 import 'package:member_ieee/Model/Member.dart';
 import 'Model/chapters.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -95,6 +96,11 @@ Widget build(BuildContext context) {
     Members.where((element) => element.chaptername == widget.NameChapter && element.nom.toLowerCase().contains(search.toLowerCase())).toList()
   ;
   return Scaffold(
+    floatingActionButton: FloatingActionButton(onPressed: (){
+      Navigator.push(context,MaterialPageRoute(builder: (context)=>
+          AddMember(chapterName: widget.NameChapter)
+    ));
+    },child: Text("Add"),),
     appBar: AppBar(
       title: Text(
         "${widget.NameChapter}  (${data.length})",
@@ -183,7 +189,7 @@ Widget build(BuildContext context) {
                             color: Colors.red,
                           ),
                         ),
-                        Text(memeber.ispayer ? 'Payer' : 'Not Yet')
+                        Text(memeber.ispayer ? 'Payer' : 'Not Yet',style:memeber.ispayer ? const TextStyle(color: Colors.green) : const TextStyle(color: Colors.red),)
                       ],
                     ),
                   ),

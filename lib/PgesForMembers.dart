@@ -25,7 +25,6 @@ class _PagesForMember extends State<PagesForMember> {
   void initState() {
         super.initState();
         getFromLocalStoreg("");
-     
   }
 
   void SetLocalStorge(val)async{
@@ -37,13 +36,13 @@ void deleteUser(int id) async {
   Member index=Members.firstWhere((element) => element.id==id);
   if (index != -1) {
     Members.remove(index);
-    /*SetLocalStorge(Members);
+    SetLocalStorge(Members);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Member deleted"))
     );
     setState(() {}); 
     Navigator.of(context).pop();
-    getFromLocalStoreg("");*/
+    getFromLocalStoreg("");
   }
 }
 
@@ -54,14 +53,12 @@ void getFromLocalStoreg(String name) async {
     final data = userdecode.map<Member>((user) => Member.fromJson(user)).toList();
     if (name.isEmpty) {
       setState(() {
-        Members = data.where((element) =>
-          element.chaptername == widget.NameChapter
-        ).toList() ?? [];
+        Members = data.toList() ?? [];
       });
     } else {
       setState(() {
         Members = data.where((element) =>
-          element.chaptername == widget.NameChapter && element.nom.toLowerCase().contains(name.toLowerCase())
+          element.nom.toLowerCase().contains(name.toLowerCase())
         ).toList() ?? [];
       });
     }
@@ -80,10 +77,11 @@ void getFromLocalStoreg(String name) async {
  
   @override
 Widget build(BuildContext context) {
-  return Scaffold(
+  List<Member> data=Members.where((element) => element.chaptername == widget.NameChapter).toList();
+            return Scaffold(
     appBar: AppBar(
       title: Text(
-        "${widget.NameChapter}  (${Members.length})",
+        "${widget.NameChapter}  (${data.length})",
         style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
     ),
@@ -104,7 +102,7 @@ Widget build(BuildContext context) {
             ),
           ),
         ),
-        if (Members.isEmpty)
+        if (data.isEmpty)
           Center(
             child: Text(
               "Members Not Found",
@@ -114,21 +112,21 @@ Widget build(BuildContext context) {
         else
           Expanded(
             child: ListView.builder(
-              itemCount: Members.length,
+              itemCount: data.length,
               itemBuilder: (context, index) {
-                final data = Members[index];
+                final memeber = data[index];
                 return Card(
                   child: ListTile(
                     leading: Checkbox(
-                      value: data.present,
+                      value: memeber.present,
                       onChanged: (val) {
                         setState(() {
                           Members[index].present = val!;
                         });
                       },
                     ),
-                    title: Text(data.nom + " " + data.lastname),
-                    subtitle: Text(data.email),
+                    title: Text(memeber.nom + " " + memeber.lastname),
+                    subtitle: Text(memeber.email),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -138,14 +136,14 @@ Widget build(BuildContext context) {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  title: Text("Do You Want Delete  ${Members[index].nom}"),
+                                  title: Text("Do You Want Delete  ${data[index].nom}"),
                                   actions: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            deleteUser(Members[index].id);
+                                            deleteUser(data[index].id);
                                           },
                                           child: Text("confirm"),
                                           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
@@ -169,7 +167,7 @@ Widget build(BuildContext context) {
                             color: Colors.red,
                           ),
                         ),
-                        Text(data.ispayer ? 'Payer' : 'Not Yet')
+                        Text(memeber.ispayer ? 'Payer' : 'Not Yet')
                       ],
                     ),
                   ),

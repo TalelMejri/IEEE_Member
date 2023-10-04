@@ -97,6 +97,19 @@ void ChangeSatet(val,int id){
   getFromLocalStoreg("");
 }
 
+ void changePayer(val,int id){
+  print(id);
+  setState(() {
+       for(int i=0;i<Members.length;i++){
+      if(Members[i].id==id){
+         Members[i].ispayer=!val;
+      }
+    }
+  });
+  SetLocalStorge(Members);
+  getFromLocalStoreg("");
+}
+
  
   @override
 Widget build(BuildContext context) {
@@ -198,8 +211,9 @@ Widget build(BuildContext context) {
                             color: Colors.red,
                           ),
                         ),
-                        Icon(memeber.ispayer  ? Icons.attach_money_sharp : Icons.money_off)
-                        //Text(memeber.ispayer ? 'Payer' : 'Not Yet',style:memeber.ispayer ? const TextStyle(color: Colors.green) : const TextStyle(color: Colors.red),)
+                        IconButton(onPressed: (){
+                          changePayer(data[index].ispayer,data[index].id);
+                        }, icon:Icon(data[index].ispayer? Icons.attach_money_sharp : Icons.money_off))
                       ],
                     ),
                   ),

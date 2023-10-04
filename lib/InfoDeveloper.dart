@@ -14,11 +14,14 @@ class InfoDeveloper extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text("Created By"),
+                SizedBox(height: 10,),
                ClipRRect(
                   borderRadius: BorderRadius.circular(30), 
                   child: Image.asset("images/profil.jpg", width: 120),
                 ),
                 const DrawerHeader(child: Text("Talel Mejri")),
+                Text("Bahra")
               ],
             ),
         ),

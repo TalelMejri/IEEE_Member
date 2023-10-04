@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:member_ieee/AddMember.dart';
@@ -30,6 +31,19 @@ class _PagesForMember extends State<PagesForMember> {
         getFromLocalStoreg("");
   }
 
+  void addInLocalStorageMember(String nom,String lastname,String email){
+    int idRandom=Random.secure().nextInt(99999);
+    Member member=Member(id: idRandom, nom: nom, lastname: lastname, email: email, ispayer: false, present: false, chaptername: widget.NameChapter);
+    Members.add(member);
+    SetLocalStorge(Members);
+    getFromLocalStoreg("");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.green,
+        content:  Text(nom+ " Added with Success To " + widget.NameChapter.toUpperCase() +" Chapter ",style: TextStyle(color: Colors.white,fontSize: 15,),))
+    );
+  }
+
   void SetLocalStorge(val)async{
     final usersJson = jsonEncode(val);
     await storage.write(key: "Members", value:usersJson);
@@ -41,7 +55,10 @@ void deleteUser(int id) async {
     Members.remove(index);
     SetLocalStorge(Members);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Member deleted"))
+      const SnackBar(
+        backgroundColor: Colors.red,
+        content: Text("Member deleted",style: TextStyle(color: Colors.white,fontSize: 15))
+        )
     );
     setState(() {}); 
     Navigator.of(context).pop();
@@ -80,15 +97,6 @@ void ChangeSatet(val,int id){
   getFromLocalStoreg("");
 }
 
-
-
-  /*List<Member> getMember(){
-    return [
-        Member(id:2,nom: "ghassen", lastname: "mejri", email: "talel@gmail.com", ispayer: true, present: false, chaptername: "RAS"),
-        Member(id:4,nom: "Hkimi", lastname: "mejri", email: "talel@gmail.com", ispayer: false, present: false, chaptername: "IAS"),
-        Member(id:3,nom: "talel", lastname: "mejri", email: "talel@gmail.com", ispayer: true, present: false, chaptername: "CS")
-    ].where((element) => element.chaptername == widget.NameChapter).toList() ?? [];
-  }*/
  
   @override
 Widget build(BuildContext context) {
@@ -98,9 +106,9 @@ Widget build(BuildContext context) {
   return Scaffold(
     floatingActionButton: FloatingActionButton(onPressed: (){
       Navigator.push(context,MaterialPageRoute(builder: (context)=>
-          AddMember(chapterName: widget.NameChapter)
+          AddMember(chapterName: widget.NameChapter,addInLocalStorageMember:addInLocalStorageMember)
     ));
-    },child: Text("Add"),),
+    },child: const Text("Add"),),
     appBar: AppBar(
       title: Text(
         "${widget.NameChapter}  (${data.length})",
@@ -127,7 +135,7 @@ Widget build(BuildContext context) {
           ),
         ),
         if (data.isEmpty)
-          Center(
+          const Center(
             child: Text(
               "Members Not Found",
               style: TextStyle(fontSize: 25),
@@ -167,15 +175,16 @@ Widget build(BuildContext context) {
                                           onPressed: () {
                                             deleteUser(data[index].id);
                                           },
-                                          child: Text("confirm"),
+                                       
                                           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                                             child: const Text("confirm"),
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text("Close"),
                                             style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+                                              child:const  Text("Close"),
                                         ),
                                       ],
                                     )
@@ -189,7 +198,8 @@ Widget build(BuildContext context) {
                             color: Colors.red,
                           ),
                         ),
-                        Text(memeber.ispayer ? 'Payer' : 'Not Yet',style:memeber.ispayer ? const TextStyle(color: Colors.green) : const TextStyle(color: Colors.red),)
+                        Icon(memeber.ispayer  ? Icons.attach_money_sharp : Icons.money_off)
+                        //Text(memeber.ispayer ? 'Payer' : 'Not Yet',style:memeber.ispayer ? const TextStyle(color: Colors.green) : const TextStyle(color: Colors.red),)
                       ],
                     ),
                   ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:member_ieee/InfoDeveloper.dart';
 import 'Model/chapters.dart';
 import 'PgesForMembers.dart';
+
 class ListChapter extends StatefulWidget {
   @override
   State<ListChapter> createState() => _ListChapter();
@@ -21,10 +23,9 @@ class _ListChapter extends State<ListChapter> {
       appBar: AppBar(
         title: const Center(child: Text("Welcome To IEEE")),
         actions: <Widget>[
-           Padding(
-            padding: EdgeInsets.only(right: 15),
-            child: Icon(Icons.info),
-          )
+           IconButton(onPressed: 
+             (){Navigator.push(context,MaterialPageRoute(builder: (context)=>const InfoDeveloper()));}
+           , icon: const Icon(Icons.info))
         ],
       ),
       body: Center(
